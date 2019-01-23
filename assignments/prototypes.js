@@ -138,7 +138,97 @@ Humanoid.prototype.greet = function() {
   console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
 
 
-  // Stretch task: 
-  // * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.  
-  // * Give the Hero and Villains different methods that could be used to remove health points from objects which could result in destruction if health gets to 0 or drops below 0;
-  // * Create two new objects, one a villain and one a hero and fight it out with methods!
+// Stretch task: 
+// * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.  
+// * Give the Hero and Villains different methods that could be used to remove health points from objects which could result in destruction if health gets to 0 or drops below 0;
+// * Create two new objects, one a villain and one a hero and fight it out with methods!
+
+
+
+// Hero
+
+function Hero(heroAttributes) {
+  this.team = heroAttributes.team;
+  this.language = heroAttributes.language;
+  this.weapons = heroAttributes.weapons;
+  Humanoid.call(this, heroAttributes);
+}
+
+Hero.prototype = Object.create(Humanoid.prototype);
+
+Hero.prototype.hit = function() {
+  this.healthPoints -= 2;
+
+  if (this.healthPoints <= 0) {
+    return this.destroy();
+  }
+
+  return `${this.name} was hit for 2 damage and now has: ${this.healthPoints} hp!`;
+}
+
+// Villain
+
+function Villain(villianAttributes) {
+  this.team = villianAttributes.team;
+  this.language = villianAttributes.language;
+  this.weapons = villianAttributes.weapons;
+  Humanoid.call(this, villianAttributes);
+}
+
+Villain.prototype = Object.create(Humanoid.prototype);
+
+Villain.prototype.hit = function() {
+  this.healthPoints -= 2;
+
+  if (this.healthPoints <= 0) {
+    return this.destroy();
+  }
+
+  return `${this.name} was hit for 2 damage and now has: ${this.healthPoints} hp!`;
+}
+
+///////////////////////////////////////////////
+
+const hero_person = new Hero({
+  createdAt: new Date(),
+  dimensions: {
+    length: 1,
+    width: 2,
+    height: 4,
+  },
+  healthPoints: 10,
+  name: 'Sir Hero',
+  team: 'Forest Kingdom',
+  weapons: [
+    'Sword',
+    'Dagger',
+  ],
+  language: 'Common Tongue',
+});
+
+const villain_person = new Villain({
+  createdAt: new Date(),
+  dimensions: {
+    length: 1,
+    width: 2,
+    height: 4,
+  },
+  healthPoints: 8,
+  name: 'Baddy Bad',
+  team: 'Evil Kingdom',
+  weapons: [
+    'Stick',
+  ],
+  language: 'Elvish',
+});
+
+
+
+console.log(hero_person.hit());
+console.log(villain_person.hit());
+console.log(hero_person.hit());
+console.log(villain_person.hit());
+console.log(hero_person.hit());
+console.log(villain_person.hit());
+console.log(hero_person.hit());
+console.log(villain_person.hit());
